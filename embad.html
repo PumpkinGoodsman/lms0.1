@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie List</title>
+</head>
+
+<body>
+    <h1>Cookie List</h1>
+    <button onclick="listCookies()">List Cookies</button>
+
+    <script>
+        function listCookies() {
+            var allCookies = document.cookie;
+            var cookiesArray = allCookies.split("; ");
+            
+            for (var i = 0; i < cookiesArray.length; i++) {
+                var cookie = cookiesArray[i].split("=");
+                var cookieName = cookie[0];
+                var cookieValue = cookie[1];
+                console.log("Cookie Name: " + cookieName + ", Cookie Value: " + cookieValue);
+            }
+        }
+    </script>
+</body>
+
+</html>

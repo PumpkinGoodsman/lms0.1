@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Video Streaming</title>
+</head>
+<body>
+    <h1>Live Webcam Video</h1>
+    
+    <video id="webcam" autoplay></video>
+    <button id="startButton">Start Webcam</button>
+    <button id="stopButton" disabled>Stop Webcam</button>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        let mediaStream;
+
+        // Function to start the webcam stream
+        function startWebcam() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        videoElement.srcObject = stream;
+                        mediaStream = stream;
+                        startButton.disabled = true; // Disable the start button after starting the stream
+                        stopButton.disabled = false; // Enable the stop button after starting the stream
+                    })
+                    .catch(function (error) {
+                        console.error('Error accessing the webcam:', error);
+                    });
+            } else {
+                console.error('getUserMedia is not available in this browser.');
+            }
+        }
+
+        // Function to stop the webcam stream
+        function stopWebcam() {
+            if (mediaStream) {
+                const tracks = mediaStream.getTracks();
+                tracks.forEach(track => track.stop());
+                videoElement.srcObject = null;
+                startButton.disabled = false; // Enable the start button after stopping the stream
+                stopButton.disabled = true; // Disable the stop button after stopping the stream
+            }
+        }
+
+        // Add click event listeners to the buttons
+        startButton.addEventListener('click', startWebcam);
+        stopButton.addEventListener('click', stopWebcam);
+    </script>
+</body>
+</html>

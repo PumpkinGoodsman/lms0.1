@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const context = canvas.getContext("2d");
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        let angle = 0;
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.save();
+            context.translate(centerX, centerY);
+            context.rotate((angle * Math.PI) / 180);
+            context.fillStyle = "#3498db";
+            context.fillRect(-50, -50, 100, 100);
+            context.restore();
+
+            angle += 1;
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
